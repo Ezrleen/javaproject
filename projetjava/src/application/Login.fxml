@@ -52,7 +52,7 @@
                   </Hyperlink>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="signup_form" layoutX="14.0" layoutY="14.0" prefHeight="660.0" prefWidth="403.0">
+            <AnchorPane fx:id="signup_form" layoutX="14.0" layoutY="14.0" prefHeight="660.0" prefWidth="403.0" visible="false">
                <children>
                   <FontAwesomeIcon fill="#2a827b" glyphName="USER_PLUS" layoutX="168.0" layoutY="76.0" selectionFill="BLACK" size="6em" />
                   <Label layoutX="115.0" layoutY="90.0" text="Sign Up Account" textFill="#2a827b">
@@ -95,7 +95,7 @@
                   </TextField>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="forgot_form" layoutX="14.0" layoutY="14.0" prefHeight="660.0" prefWidth="403.0" visible="false">
+            <AnchorPane fx:id="forgot_form" layoutX="14.0" layoutY="14.0" prefHeight="660.0" prefWidth="403.0">
                <children>
                   <FontAwesomeIcon fill="#2a827b" glyphName="LOCK" layoutX="190.0" layoutY="97.0" selectionFill="BLACK" size="5em" />
                   <Label layoutX="131.0" layoutY="107.0" prefHeight="33.0" prefWidth="203.0" text="Forgot Password" textFill="#2a827b">

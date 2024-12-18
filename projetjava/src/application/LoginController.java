@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -31,6 +32,7 @@ public class LoginController {
     @FXML
     private Button changepass_back;
 
+    private String userforgotpass;
     @FXML
     private PasswordField changepass_confirmpass;
 
@@ -131,24 +133,65 @@ public class LoginController {
         reader.close();
         return false;
     }
-    
+    //change password when answering right//
+    public void changepassproceed(ActionEvent e) {
+    	if(e.getSource()==changepass_proceed) {
+    		String changepass=changepass_pass.getText();
+    		String confirmpass=changepass_confirmpass.getText();
+    		if(confirmpass.isEmpty()||changepass.isEmpty()) {
+    			Alert alert=new Alert(AlertType.ERROR);
+    			alert.setHeaderText("");
+    			alert.setContentText("all filds are required");
+    			alert.setTitle("Password ERROR");
+    			alert.showAndWait();
+    		}
+    		else if (changepass.length()<8 || confirmpass.length()<8) {
+    			Alert alert=new Alert(AlertType.ERROR);
+    			alert.setHeaderText("");
+    			alert.setContentText("Password need to be at least 8 carcaters");
+    			alert.setTitle("Password ERROR");
+    			alert.showAndWait();
+    		}
+			else if(!changepass.equals(confirmpass)) {
+				Alert alert=new Alert(AlertType.ERROR);
+    			alert.setHeaderText("");
+    			alert.setContentText("Passwords need match!");
+    			alert.setTitle("Password ERROR");
+    			alert.showAndWait();
+    		}
+			 {
+				
+			}
+    			
+    			
+    		}
+    		}
+    			
+    		
+    		
+    			
+    		}
+    // verifyquestion in forgot pass//
     boolean verifyquestion(String username) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("login.txt"));
-        String line = reader.readLine();
-        
+        try (BufferedReader reader = new BufferedReader(new FileReader("login.txt"))) {
+            String line;
+            String forgotselect = forgot_select.getValue();
+            String forgotanswer = forgot_answer.getText();
 
-        while (line!=null) {
-            String[] textArray = line.split(" ");
-                 
-                if (username.equals(textArray[0])) {
-                    reader.close(); 
-                    return true;
-                
+            while ((line = reader.readLine()) != null) {
+                String[] linearray = line.split(" ");
+
+                if (username.equals(linearray[0])) {
+                    String[] subset = Arrays.copyOfRange(linearray, 3, linearray.length - 1);
+                    String question = String.join(" ", subset);
+                    String answer = linearray[linearray.length - 1];
+
+                    if (forgotselect.equals(question) && answer.equals(forgotanswer)) {
+                        return true;
+                    }
+                }
             }
-            line = reader.readLine();
         }
-
-        reader.close();
         return false;
     }
     public void signupbtn(ActionEvent e) throws IOException {
@@ -281,7 +324,16 @@ public class LoginController {
         		alert.showAndWait();
         		
         	}
+        	else if(!verifyquestion(forgotuser)) {
+        		Alert alert=new Alert(AlertType.ERROR);
+        		alert.setContentText(" CHECK YOUR QUESTION AND ANSWER");
+        		alert.setHeaderText("");
+        		alert.setTitle("QUESTION ANSWER WRONG");
+        		alert.showAndWait();
+        		
+        	}
         	else {
+        		userforgotpass=forgotuser;
         		forgot_form.setVisible(false);
                 changepass_form.setVisible(true);
         	}
